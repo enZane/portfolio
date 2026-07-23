@@ -1,0 +1,23 @@
+[
+  {
+    "id": "eugenia",
+    "name": "EuGenIA",
+    "description": "Workflow orchestration for humans and AI. Formal state machines coordinate people, tools, and agents, while meta-agents watch for bottlenecks and rebalance the load.",
+    "url": "https://www.coyomilabs.dev/",
+    "tags": ["State machines", "Meta-agents", "Offline-first"]
+  },
+  {
+    "id": "composabase",
+    "name": "Composabase",
+    "description": "One production-ready GraphQL API composed from the data sources a team already runs — Postgres, MySQL, OpenAPI, Airtable — with auth, caching, and security included.",
+    "url": "https://composabase.com/",
+    "tags": ["GraphQL", "API composition", "Auth & caching"]
+  },
+  {
+    "id": "valgoritmo",
+    "name": "Valgoritmo",
+    "description": "Company valuations in Spanish, done properly: five-year DCF projections, WACC, and current market data, exported as a documented PDF you can take into a board meeting.",
+    "url": "https://valgoritmo.com/",
+    "tags": ["DCF", "WACC", "PDF reports"]
+  }
+]

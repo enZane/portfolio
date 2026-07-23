@@ -1,0 +1,39 @@
+[
+  {
+    "id": "rendering-basics",
+    "title": "UI = f(data)",
+    "description": "From index.html to AI — a 30-year argument about what the rendering function is and where it should run.",
+    "date": "2026-07-07",
+    "url": "https://rendering-basics.coyomi-labs.workers.dev/1"
+  },
+  {
+    "id": "cursor-workshop",
+    "title": "Cursor Workshop Durango",
+    "description": "A hands-on workshop taking developers, designers, and first-timers up the AI coding maturity ladder — from prompting to autonomous agents — with everyone shipping a working site by the end.",
+    "date": "2026-02-28",
+    "featured": true,
+    "badge": "Sponsored by Cursor",
+    "url": "https://github.com/enZane/cursor-workshop-durango"
+  },
+  {
+    "id": "scaling-ideas-with-ai",
+    "title": "Scaling Ideas with AI",
+    "description": "How to take an idea from spark to something shippable — and how AI can help you move faster without losing craft along the way.",
+    "date": "2026-02-26",
+    "url": "https://scalingideaswithai.netlify.app/1"
+  },
+  {
+    "id": "tech-debt",
+    "title": "Technical Debt",
+    "description": "Why shipping fast puts you in debt, why that debt can be a good thing, and how to pay it back before the interest buries you.",
+    "date": "2025-09-24",
+    "url": "https://techdebt-slides.netlify.app/1"
+  },
+  {
+    "id": "poker-prompt",
+    "title": "¿Estás programando o apostando?",
+    "description": "Vibecoding with AI has luck built in, just like poker — a talk (in Spanish) about playing with strategy and intention instead of gambling on the next prompt.",
+    "date": "2025-06-24",
+    "url": "https://vibecode-ai-slides.netlify.app/1"
+  }
+]

@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+ * Design system definition — "pixel field".
+ *
+ * Every colour here is sampled from src/assets/sql-px-portrait.png, so the
+ * page and the avatar share one palette. --field is the portrait's exact
+ * background colour: any surface painted with it makes the image edgeless.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-field -> bg-field, text-field).
+ *
+ * The :root block defines the actual values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ *
+ * Font families are resolved by Astro's fonts config (astro.config.mjs) and
+ * injected as --astro-font-* variables by the <Font> components in the head.
+ */
+
+@theme inline {
+  --font-display: var(--astro-font-display);
+  --font-body: var(--astro-font-body);
+  --font-bitmap: var(--astro-font-bitmap);
+  --font-sans: var(--astro-font-body);
+
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-void: var(--void);
+  --color-muted: var(--muted);
+  --color-field: var(--field);
+  --color-field-deep: var(--field-deep);
+  --color-peach: var(--peach);
+  --color-rust: var(--rust);
+  --color-rule: var(--rule);
+
+  /* Hard shadows only — this system has no blur. */
+  --shadow-hard: 8px 8px 0 var(--void);
+  --shadow-hard-sm: 4px 4px 0 var(--void);
+  --shadow-hard-xs: 2px 2px 0 var(--void);
+}
+
+:root {
+  color-scheme: light;
+
+  --paper: oklch(0.9586 0.0035 174.48);      /* #eff2f1 — cool near-white */
+  --card: oklch(1 0 0);
+  --ink: oklch(0.1776 0.007 34.31);          /* #14100f — the portrait's hair */
+  --void: oklch(0.1256 0.034 248.21);        /* #000713 — the hoodie */
+  --muted: oklch(0.5136 0.0177 212.06);      /* slate for secondary copy */
+  --field: oklch(0.7061 0.11 208.06);        /* #31b3c4 — the portrait's background */
+  --field-deep: oklch(0.5815 0.0911 210.67); /* pressed state of the field */
+  --peach: oklch(0.7581 0.1152 54.61);       /* #e99c67 — skin */
+  --rust: oklch(0.6246 0.1473 41.47);        /* #cf6439 — mouth, the hot accent */
+  --rule: oklch(0.1776 0.007 34.31 / 14%);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+  }
+
+  ::selection {
+    background-color: var(--field);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--rust);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* The bitmap face, at the only size it is allowed to appear. */
+@utility label {
+  font-family: var(--font-bitmap);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Pixel art must never be resampled smooth. */
+@utility pixelated {
+  image-rendering: pixelated;
+}
