@@ -2,7 +2,7 @@
   {
     "id": "eugenia",
     "name": "EuGenIA",
-    "description": "Workflow orchestration for humans and AI. Formal state machines coordinate people, tools, and agents, while meta-agents watch for bottlenecks and rebalance the load.",
+    "description": "My company's product — I'm co-founder of Coyomi Labs. Workflow orchestration for humans and AI: formal state machines coordinate people, tools, and agents, while meta-agents watch for bottlenecks and rebalance the load.",
     "url": "https://www.coyomilabs.dev/",
     "tags": ["State machines", "Meta-agents", "Offline-first"]
   },
@@ -19,5 +19,11 @@
     "description": "Company valuations in Spanish, done properly: five-year DCF projections, WACC, and current market data, exported as a documented PDF you can take into a board meeting.",
     "url": "https://valgoritmo.com/",
     "tags": ["DCF", "WACC", "PDF reports"]
+  },
+  {
+    "id": "a11y-agent-cli",
+    "name": "A11Y Agent CLI",
+    "description": "An agentic accessibility auditor in TypeScript. It crawls a site and uses Claude's tool use to run WCAG checks page by page, then writes a report that says what's broken and how to fix it. I care about accessible interfaces enough to build the thing that audits them.",
+    "tags": ["Accessibility", "Agentic AI", "CLI"]
   }
 ]

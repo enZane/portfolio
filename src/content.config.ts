@@ -20,7 +20,8 @@ const projects = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    url: z.string().url(),
+    // Omit for work that isn't public yet — the row renders unlinked instead.
+    url: z.string().url().optional(),
     // Rendered as small chips under the description; keep them short.
     tags: z.array(z.string()).default([]),
   }),

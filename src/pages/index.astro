@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { Font, Image } from "astro:assets";
 import portrait from "../assets/sql-px-portrait.png";
+import projectsFile from "../data/projects.json";
 import "../styles/global.css";
 
 // First slide of each deck, keyed by talk id (screenshots live in src/assets/talks).
@@ -11,8 +12,12 @@ const covers = import.meta.glob<{ default: ImageMetadata }>(
 );
 const coverFor = (id: string) => covers[`../assets/talks/${id}.png`]?.default;
 
-// Authored order — projects.json is the running order.
-const projects = await getCollection("projects");
+// Authored order — projects.json is the running order. The file loader hands
+// entries back sorted by id, so the authored sequence has to be restored.
+const projectOrder = projectsFile.map((project) => project.id);
+const projects = (await getCollection("projects")).sort(
+	(a, b) => projectOrder.indexOf(a.id) - projectOrder.indexOf(b.id),
+);
 
 // The eyebrow tells you where the link actually goes.
 const domainOf = (url: string) =>
@@ -56,9 +61,9 @@ const talkDate = new Intl.DateTimeFormat("en-US", {
 		<meta name="generator" content={Astro.generator} />
 		<meta
 			name="description"
-			content="Almendra Olivas is a frontend engineer and speaker building web interfaces that are fast, accessible, and gentle to use."
+			content="Almendra Olivas is a full-stack engineer, co-founder of Coyomi Labs, and speaker building platforms and interfaces that are fast, accessible, and gentle to use."
 		/>
-		<title>Almendra Olivas — Frontend engineer &amp; speaker</title>
+		<title>Almendra Olivas — Full-stack engineer, founder &amp; speaker</title>
 		<Font cssVariable="--astro-font-display" preload />
 		<Font cssVariable="--astro-font-body" preload />
 		<Font cssVariable="--astro-font-bitmap" />
@@ -92,8 +97,9 @@ const talkDate = new Intl.DateTimeFormat("en-US", {
 						<p
 							class="mt-8 max-w-[38ch] text-lg leading-[1.6] text-ink/80 sm:text-xl"
 						>
-							I build web interfaces that are fast, accessible,
-							and gentle to use — and I speak about the craft
+							I build platforms and interfaces that are fast,
+							accessible, and gentle to use — from the database
+							to the last pixel — and I speak about the craft
 							behind them.
 						</p>
 						<div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -146,6 +152,14 @@ const talkDate = new Intl.DateTimeFormat("en-US", {
 								of designed for.
 							</p>
 							<p>
+								Eight-plus years of that, mostly on platforms and
+								products: at Octahedroid I worked on Composabase,
+								on Pantheon's open-source decoupled-kit-js SDKs,
+								and with enterprise teams at Okta, Auth0, and
+								Databricks — and now I'm co-founder of Coyomi
+								Labs.
+							</p>
+							<p>
 								These days I build component systems, shape
 								accessible experiences, and speak about the
 								things that matter to me: inclusive design,
@@ -177,48 +191,70 @@ const talkDate = new Intl.DateTimeFormat("en-US", {
 						<p
 							class="max-w-[46ch] text-2xl leading-[1.4] font-medium tracking-[-0.015em]"
 						>
-							What I'm building. Every one of these is live —
-							the links go straight to it.
+							What I'm building — platforms, products, and the
+							tools around them. Where there's a link, it goes
+							straight to the live thing.
 						</p>
 					</div>
 
 					<ul class="mt-16 border-t-2 border-ink">
 						{
-							projects.map((project) => (
-								<li class="border-b-2 border-rule">
-									<a
-										href={project.data.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="project -mx-4 grid gap-x-12 gap-y-4 px-4 py-9 md:grid-cols-[9rem_1fr_2rem] md:items-baseline"
-									>
-										<p class="label text-muted">
-											{domainOf(project.data.url)}
+							projects.map((project) => {
+								// Same body either way; only the row wrapper and the
+								// gutter change when there is nothing to link to yet.
+								const body = (
+									<div>
+										<h3 class="project-name text-[1.75rem] leading-[1.1] sm:text-[2rem]">
+											{project.data.name}
+										</h3>
+										<p class="mt-3 max-w-[54ch] leading-[1.65] text-muted">
+											{project.data.description}
 										</p>
-										<div>
-											<h3 class="project-name text-[1.75rem] leading-[1.1] sm:text-[2rem]">
-												{project.data.name}
-											</h3>
-											<p class="mt-3 max-w-[54ch] leading-[1.65] text-muted">
-												{project.data.description}
-											</p>
-											{project.data.tags.length > 0 && (
-												<ul class="mt-5 flex flex-wrap gap-2">
-													{project.data.tags.map((tag) => (
-														<li class="tag label">{tag}</li>
-													))}
-												</ul>
-											)}
-										</div>
-										<span
-											class="project-arrow hidden text-2xl md:block"
-											aria-hidden="true"
-										>
-											↗
-										</span>
-									</a>
-								</li>
-							))
+										{project.data.tags.length > 0 && (
+											<ul class="mt-5 flex flex-wrap gap-2">
+												{project.data.tags.map((tag) => (
+													<li class="tag label">{tag}</li>
+												))}
+											</ul>
+										)}
+									</div>
+								);
+								const row =
+									"-mx-4 grid gap-x-12 gap-y-4 px-4 py-9 md:grid-cols-[9rem_1fr_2rem] md:items-baseline";
+
+								return (
+									<li class="border-b-2 border-rule">
+										{project.data.url ? (
+											<a
+												href={project.data.url}
+												target="_blank"
+												rel="noopener noreferrer"
+												class={`project ${row}`}
+											>
+												<p class="label text-muted">
+													{domainOf(project.data.url)}
+												</p>
+												{body}
+												<span
+													class="project-arrow hidden text-2xl md:block"
+													aria-hidden="true"
+												>
+													↗
+												</span>
+											</a>
+										) : (
+											<div class={row}>
+												<p class="label">
+													<span class="badge inline-block">
+														Coming soon
+													</span>
+												</p>
+												{body}
+											</div>
+										)}
+									</li>
+								);
+							})
 						}
 					</ul>
 				</div>
@@ -397,6 +433,12 @@ const talkDate = new Intl.DateTimeFormat("en-US", {
 										<span class="contact-arrow" aria-hidden="true">↗</span>
 									</a>
 								</li>
+								{/*
+									TODO: LinkedIn. No profile URL exists anywhere in
+									this repo yet — drop in a copy of the GitHub row
+									above with href="https://www.linkedin.com/in/…",
+									label "LinkedIn", and the profile path as the value.
+								*/}
 							</ul>
 						</div>
 					</div>
