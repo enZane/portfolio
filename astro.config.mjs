@@ -41,5 +41,9 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  adapter: cloudflare()
+  // Pre-optimize the talk thumbnails at build time. The adapter's default
+  // ("cloudflare-binding") defers them to a runtime /_image endpoint backed by
+  // the Cloudflare Images binding; this site is fully static, so there is
+  // nothing to defer.
+  adapter: cloudflare({ imageService: 'compile' })
 });
